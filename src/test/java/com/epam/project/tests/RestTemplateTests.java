@@ -3,6 +3,7 @@ package com.epam.project.tests;
 import com.epam.project.model.User;
 import com.epam.project.model.gist.File;
 import com.epam.project.model.gist.Gist;
+import org.eclipse.egit.github.core.service.GistService;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
@@ -70,7 +71,7 @@ public class RestTemplateTests {
          requestHeaders.setContentLength(0);
          HttpEntity<Gist> entity = new HttpEntity<Gist>(requestHeaders);
 
-        ResponseEntity<Gist>  response = restTempl.exchange("https://api.github.com/gists/9f5d3732772148fe3260e7794513f590/star", HttpMethod.PUT, entity, Gist.class);
+        ResponseEntity<Gist>  response = restTempl.exchange("https://api.github.com/gists/ba5eed4d12c96657c7ba033bfe49ce44/star", HttpMethod.PUT, entity, Gist.class);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
 
      }
@@ -96,5 +97,12 @@ public class RestTemplateTests {
          HttpEntity<Gist> entity = new HttpEntity<Gist>(gist);
          ResponseEntity<Gist>  response = restTempl.exchange("https://api.github.com/gists/9f5d3732772148fe3260e7794513f590", HttpMethod.PATCH, new HttpEntity<Gist>(gist), Gist.class);
          Assert.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
+     }
+
+     @Test
+    public void test() throws Exception{
+         org.eclipse.egit.github.core.Gist gist = new org.eclipse.egit.github.core.Gist();
+         GistService service = new GistService();
+         service.starGist("4946619");
      }
 }
